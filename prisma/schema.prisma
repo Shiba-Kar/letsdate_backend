@@ -1,0 +1,61 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Hobby {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("hobbiles")
+}
+
+model Profile {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String?
+  age    Int?
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @unique @db.ObjectId
+  Images Image[]
+
+  @@map("profiles")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  images    Image[]
+  imageId   String?  @unique @db.ObjectId
+  email     String   @unique
+  username  String   @unique
+  firstName String?
+  lastName  String?
+  roles      Roles[]
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profileId String?  @unique @db.ObjectId
+  profile   Profile?
+
+  @@map("users")
+}
+
+model Image {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  createdAt DateTime @db.Date
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?  @db.ObjectId
+
+  @@map("images")
+}
+
+enum Roles {
+  ADMIN
+  USER
+}
