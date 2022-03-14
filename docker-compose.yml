@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  postgresql_database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=srikantrenu786
+      - POSTGRES_DB=letsdate
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=shibaprasadkar50@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=srikantrenu786
+    ports:
+      - '5050:80'
+    restart: always
+    volumes:
+      - pgadmin:/root/.pgadmin
+volumes:
+  database-data:
+  pgadmin:
