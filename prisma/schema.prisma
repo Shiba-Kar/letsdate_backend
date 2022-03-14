@@ -1,15 +1,15 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+ 
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Hobby {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto())
 
   @@map("hobbiles")
 }
@@ -28,16 +28,16 @@ model Profile {
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   images    Image[]
-  imageId   String?  @unique @db.ObjectId
+  imageId   String?  @db.ObjectId
   email     String   @unique
   username  String   @unique
   firstName String?
   lastName  String?
-  roles      Roles[]
+  roles     Roles[]
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  profileId String?  @unique @db.ObjectId
+  profileId String?  @db.ObjectId
   profile   Profile?
 
   @@map("users")
@@ -47,9 +47,9 @@ model Image {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   url       String
   createdAt DateTime @db.Date
-  User      User?    @relation(fields: [userId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?  @db.ObjectId
-  Profile   Profile? @relation(fields: [profileId], references: [id])
+  Profile   Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId String?  @db.ObjectId
 
   @@map("images")
