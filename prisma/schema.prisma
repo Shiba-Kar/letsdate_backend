@@ -1,6 +1,6 @@
 generator client {
-  provider        = "prisma-client-js"
- 
+  provider = "prisma-client-js"
+
 }
 
 datasource db {
@@ -9,53 +9,59 @@ datasource db {
 }
 
 model Hobby {
-  id String @id @default(auto())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("hobbiles")
 }
 
 model Profile {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  name   String?
-  age    Int?
-  user   User    @relation(fields: [userId], references: [id])
-  userId String  @unique @db.ObjectId
-  Images Image[]
+  id        String   @id @default(uuid())
+  name      String?
+  age       Int?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  Images    Image[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("profiles")
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(uuid())
   images    Image[]
-  imageId   String?  @db.ObjectId
+  imageId   Int?
   email     String   @unique
   username  String   @unique
   firstName String?
   lastName  String?
-  roles     Roles[]
+  roles     Role[]
+  isAdmin   Boolean  @default(false)
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  profileId String?  @db.ObjectId
+  profileId Int?
   profile   Profile?
 
   @@map("users")
 }
 
 model Image {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  url       String
-  createdAt DateTime @db.Date
-  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?  @db.ObjectId
-  Profile   Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId String?  @db.ObjectId
+  id  String @id @default(uuid())
+  url String
 
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  Profile   Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   @@map("images")
 }
 
-enum Roles {
+enum Role {
   ADMIN
   USER
 }

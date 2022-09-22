@@ -1,0 +1,2 @@
+-- CreateEnum
+CREATE TYPE "Action" AS ENUM ('CREATE', 'UPDATE', 'DELETE', 'MANAGE', 'READ');

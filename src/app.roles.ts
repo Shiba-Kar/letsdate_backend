@@ -1,7 +1,7 @@
 import { RolesBuilder } from "nest-access-control";
-import { Roles } from "@prisma/client";
+import { Role } from "@prisma/client";
 
 export const roles: RolesBuilder = new RolesBuilder();
 roles
-  .grant(Roles.USER).createOwn('users').deleteOwn('users').readAny('users')
-  .grant(Roles.ADMIN).extend(Roles.USER).updateAny('users').deleteAny('users');
+  .grant(Role.USER).createOwn('users').deleteOwn('users').readAny('users').updateOwn('users')
+  .grant(Role.ADMIN).extend(Role.USER).updateAny('users').deleteAny('users'); 

@@ -19,17 +19,14 @@ import { ImageService } from './image/image.service';
 import { ImageController } from './res/image/image.controller';
 import { ImageModule } from './image/image.module';
 import { MulterModule } from '@nestjs/platform-express';
+//import { roles } from './app.roles';
+import { APP_GUARD } from '@nestjs/core';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.roles';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './roles.guard';
 
 
 @Module({
-  imports: [AppModule, PrismaModule, AuthModule, UserModule, ProfileModule, HobbyModule, ImageModule, AccessControlModule.forRoles(roles)],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },]
+  imports: [ AccessControlModule.forRoles(roles),AppModule, PrismaModule, AuthModule, UserModule, ProfileModule, HobbyModule],
+
 })
 export class AppModule { }
