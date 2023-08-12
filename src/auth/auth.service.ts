@@ -1,7 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Prisma, Roles, User } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { Prisma, Role, User } from '@prisma/client';
 import * as argon from 'argon2';
 import { FirebaseAdmin, InjectFirebaseAdmin } from 'nestjs-firebase';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -11,18 +10,18 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService, @InjectFirebaseAdmin() private firebase: FirebaseAdmin) { }
 
   async signToken(user: User): Promise<string> {
-    delete user.password;
-    return this.jwt.signAsync(user, { secret: process.env.JWT_SECRET })
+    const { id, username, email } = user;
+    return this.jwt.signAsync({ id, username, email }, { secret: process.env.JWT_SECRET })
   }
 
   async signUp(signupDto: SignUpDto) {
     try {
       const hash = await argon.hash(signupDto.password);
-      const user = await this.prisma.user.create({ data: { email: signupDto.email, password: hash, username: signupDto.username, roles: Roles.USER} });
+      const user = await this.prisma.user.create({ data: { email: signupDto.email, password: hash, username: signupDto.username, roles: [Role.USER] } });
       delete user.password
       return user;
     } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new ForbiddenException('User already exists');
       }
     }
@@ -55,5 +54,9 @@ export class AuthService {
     } catch (error) {
       throw new ForbiddenException('Invalid Firebase Token');
     }
+  }
+  async validateUser(email: string): Promise<any> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    return user;
   }
 }
