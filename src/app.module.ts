@@ -24,9 +24,15 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.roles';
 
-
 @Module({
-  imports: [ AccessControlModule.forRoles(roles),AppModule, PrismaModule, AuthModule, UserModule, ProfileModule, HobbyModule],
-
+  imports: [
+    AccessControlModule.forRoles(roles),
+    AppModule,
+    PrismaModule,
+    AuthModule,
+    UserModule,
+    ProfileModule,
+    HobbyModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

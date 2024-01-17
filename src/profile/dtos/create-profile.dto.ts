@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProfileDto {
-    @ApiProperty({ nullable: true ,default:"shiva"})
-    name: string;
+  @ApiProperty({ nullable: true, default: 'shiva' })
+  name: string;
 }
 
 /* model Profile {

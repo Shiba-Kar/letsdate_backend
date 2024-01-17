@@ -1,15 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
-   
-    @ApiProperty({ nullable: true })
-    avtar: string
+  @ApiProperty({ nullable: true })
+  avtar: string;
 
-    @ApiProperty({ nullable: true })
-    firstName: string
+  @ApiProperty({ nullable: true })
+  firstName: string;
 
-    @ApiProperty({ nullable: true })
-    lastName: string
+  @ApiProperty({ nullable: true })
+  lastName: string;
 }
 /* 
 model User {

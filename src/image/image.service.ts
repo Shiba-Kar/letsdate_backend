@@ -4,7 +4,6 @@ import { UpdateImageDto } from './dto/update-image.dto';
 
 @Injectable()
 export class ImageService {
- 
   create(createImageDto: CreateImageDto) {
     return 'This action adds a new image';
   }
@@ -24,6 +23,4 @@ export class ImageService {
   remove(id: number) {
     return `This action removes a #${id} image`;
   }
-
- 
 }

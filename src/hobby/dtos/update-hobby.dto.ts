@@ -2,14 +2,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { CreateHobbyDto } from './create-hobby.dto';
 
-export class UpdateHobbyDto extends PartialType(CreateHobbyDto) { 
-
-    
-  
-}
-
-
-
+export class UpdateHobbyDto extends PartialType(CreateHobbyDto) {}
 
 /*
 
@@ -26,4 +19,4 @@ model User {
   createdAt DateTime @default(now())
 } 
 
-*/ 
+*/

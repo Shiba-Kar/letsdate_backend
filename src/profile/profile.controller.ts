@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dtos/create-profile.dto';
 import { UpdateProfileDto } from './dtos/update-profile.dto';
@@ -10,8 +20,7 @@ import { AuthGuard } from '@nestjs/passport';
 @Controller('profiles')
 @ApiBearerAuth()
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) { }
-
+  constructor(private readonly profileService: ProfileService) {}
 
   @Get()
   findAll() {
@@ -24,8 +33,6 @@ export class ProfileController {
     return this.profileService.create(userId, createProfileDto);
   }
 
-
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.profileService.findOne(+id);
@@ -33,9 +40,11 @@ export class ProfileController {
 
   @ApiQuery({ name: 'profileId', required: false })
   @Patch(':id')
-  update(@Param('profileId') id: string, @Body() updateProfileDto: UpdateProfileDto, @Req() req: any) {
-
-
+  update(
+    @Param('profileId') id: string,
+    @Body() updateProfileDto: UpdateProfileDto,
+    @Req() req: any,
+  ) {
     return this.profileService.update(id, req, updateProfileDto);
   }
 

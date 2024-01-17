@@ -5,12 +5,11 @@ import { UpdateProfileDto } from './dtos/update-profile.dto';
 
 @Injectable()
 export class ProfileService {
-  constructor(private prisma: PrismaService) {
-
-  }
+  constructor(private prisma: PrismaService) {}
   async create(userId: string, createProfileDto: CreateProfileDto) {
-
-    const profile = await this.prisma.profile.create({ data: { userId, ...createProfileDto } });
+    const profile = await this.prisma.profile.create({
+      data: { userId, ...createProfileDto },
+    });
     return { statusCode: 201, message: 'Profile created', data: profile };
   }
 
@@ -24,11 +23,17 @@ export class ProfileService {
   }
 
   async update(id: string, user: any, updateProfileDto: UpdateProfileDto) {
-    var profile;
+    let profile;
     if (id && user.role === 'ADMIN')
-      profile = await this.prisma.profile.update({ where: { id }, data: updateProfileDto });
+      profile = await this.prisma.profile.update({
+        where: { id },
+        data: updateProfileDto,
+      });
 
-    profile = await this.prisma.user.update({ where: { id: user.id }, data: { profile: { update: { ...updateProfileDto } } } });
+    profile = await this.prisma.user.update({
+      where: { id: user.id },
+      data: { profile: { update: { ...updateProfileDto } } },
+    });
 
     return { statusCode: 201, message: 'Profile updated', data: profile };
   }

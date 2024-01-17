@@ -7,8 +7,13 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategy';
 
 @Module({
-  imports: [JwtModule.register({}), FirebaseModule.forRoot({ googleApplicationCredential: JSON.parse(process.env.FIREBASE_ADMIN_CERT) }),],
+  imports: [
+    JwtModule.register({}),
+    FirebaseModule.forRoot({
+      googleApplicationCredential: JSON.parse(process.env.FIREBASE_ADMIN_CERT),
+    }),
+  ],
   controllers: [AuthController],
   providers: [PrismaService, AuthService, JwtStrategy],
 })
-export class AuthModule { }
+export class AuthModule {}

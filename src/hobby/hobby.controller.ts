@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HobbyService } from './hobby.service';
 import { CreateHobbyDto } from './dtos/create-hobby.dto';
 import { UpdateHobbyDto } from './dtos/update-hobby.dto';

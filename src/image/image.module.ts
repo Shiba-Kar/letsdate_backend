@@ -3,6 +3,6 @@ import { ImageService } from './image.service';
 import { ImageController } from './image.controller';
 @Module({
   controllers: [ImageController],
-  providers: [ ImageService],
+  providers: [ImageService],
 })
-export class ImageModule { }
+export class ImageModule {}
